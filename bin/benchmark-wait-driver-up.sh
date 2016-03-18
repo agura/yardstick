@@ -23,7 +23,7 @@ max_count=20
 sleep_time=0.5
 
 for (( ; i < ${max_count}; i++ )) do
-    if pgrep -f "Dyardstick.driver" > /dev/null 2>&1; then
+    if ps auxww | grep "Dyardstick.driver" | grep -v "grep" > /dev/null 2>&1; then
         break
     else
         sleep ${sleep_time}

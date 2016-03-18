@@ -67,7 +67,7 @@ if [ "${REMOTE_USER}" == "" ]; then
     exit 1
 fi
 
-pkill -9 -f "benchmark-server-restarter-start.sh"
+kill -9 `ps auxww | grep "benchmark-server-restarter-start.sh" | grep -v "grep" | awk {'print $2'}`
 
 if [[ "${RESTART_SERVERS}" != "" ]] && [[ "${RESTART_SERVERS}" != "true" ]]; then
     echo "<"$(date +"%H:%M:%S")"><yardstick> All server restartets are stopped."
@@ -76,7 +76,7 @@ fi
 IFS=',' read -ra hosts0 <<< "${SERVER_HOSTS}"
 for host_name in "${hosts0[@]}";
 do
-    `ssh -o PasswordAuthentication=no ${REMOTE_USER}"@"${host_name} pkill -9 -f "Dyardstick.server"`
+    `ssh -o PasswordAuthentication=no ${REMOTE_USER}"@"${host_name} kill -9 `ps auxww | grep "Dyardstick.server" | grep -v "grep" | awk {'print $2'}``
 
     echo "<"$(date +"%H:%M:%S")"><yardstick> Server is stopped on "${host_name}
 done

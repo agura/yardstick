@@ -16,6 +16,6 @@
 # Script that waits for a driver to finish.
 #
 
-while pgrep -f "Dyardstick.driver" > /dev/null 2>&1; do
+while ps auxww | grep "Dyardstick.driver" | grep -v "grep" > /dev/null 2>&1; do
     sleep 1s
 done

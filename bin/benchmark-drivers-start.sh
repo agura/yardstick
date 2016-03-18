@@ -125,7 +125,7 @@ do
 
     cfg="${outFol} ${host_name0} -id ${id} ${CONFIG}"
 
-    suffix=`echo "${cfg}" | tail -c 60 | sed 's/ *$//g'`
+    suffix=`echo "${cfg}" | tail -60c | sed 's/ *$//g'`
 
     echo "<"$(date +"%H:%M:%S")"><yardstick> Starting driver config '..."${suffix}"' on "${host_name}" with id=${id}"
 

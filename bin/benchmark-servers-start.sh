@@ -84,12 +84,12 @@ if [ "${CONFIG}" == "" ]; then
 fi
 
 function cleanup() {
-    pkill -9 -f "Dyardstick.server"
+    kill -9 `ps auxww | grep "Dyardstick.server" | grep -v "grep" | awk {'print $2'}`
 
     IFS=',' read -ra hosts0 <<< "${SERVER_HOSTS}"
     for host_name in "${hosts0[@]}";
     do
-        `ssh -o PasswordAuthentication=no ${REMOTE_USER}"@"${host_name} pkill -9 -f "Dyardstick.server"`
+        `ssh -o PasswordAuthentication=no ${REMOTE_USER}"@"${host_name} kill -9 `ps auxww | grep "Dyardstick.server" | grep -v "grep" | awk {'print $2'}``
     done
 }
 
@@ -117,7 +117,7 @@ for host_name in "${hosts0[@]}";
 do
     CONFIG_PRM="-id ${id} ${CONFIG}"
 
-    suffix=`echo "${CONFIG}" | tail -c 60 | sed 's/ *$//g'`
+    suffix=`echo "${CONFIG}" | tail -60c | sed 's/ *$//g'`
 
     echo "<"$(date +"%H:%M:%S")"><yardstick> Starting server config '..."${suffix}"' on "${host_name}" with id=${id}"
 
